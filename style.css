@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Quicksand', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+#navbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+
+#navbar ul{
+    display: flex;
+    list-style-type: none;
+    font-size: 20px;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 40px 10px 10px;
+}
+
+#navbar ul li{
+    margin-left: 30px;
+}
+
+#logo{
+    font-family: 'Permanent Marker', cursive;
+    font-size: 30px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    font-size: 50px;
+}
+
+#carritoImg{
+    width: 40px;
+    height: 40px;
+}
+
+#firstLook{
+    display: flex;
+    background-image: url(./img/fondo1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#firstLook h1{
+    font-size: 80px;
+    color: aliceblue;
+    text-shadow: 2px 2px black;
+}
+
+#conciertos{
+    margin-top: 50px;
+    padding: 30px;
+    text-align: center;
+}
+
+#conciertos div{
+    display: flex;
+}
+
+#listaConciertos{
+    justify-content: space-between;
+}
+
+#listaConciertos div{
+    border-radius: 20px;
+    margin-bottom: 30px;
+    display: block;
+    box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    transition: 0.5s;
+}
+
+#listaConciertos div:hover{
+    scale: 1.1;
+}
+
+#listaConciertos div img{
+    border-radius: 20px;
+    width: 400px;
+    height: 400px;
+}
+
+#listaConciertos div p{
+    font-size: 30px;
+    margin: 10px;
+}
+
+#seleccionEntradas{
+    margin: auto;
+    display: flex;
+    width: 80%;
+    border-radius: 20px;
+    background-color: antiquewhite;
+    box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    justify-content: center;
+    align-items: center;
+}
+
+#seleccionEntradas form{
+    margin: 20px;
+}
+
+#opcionesForm{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#opcionesForm p{
+    font-size: 20px;
+}
+#opcionesForm select{
+    margin: 10px;
+    border-radius: 10px;
+    width: 60%;
+    height: 30px;
+    text-align: center;
+}
+
+#seleccionEntradas form button{
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+#formNoticias{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+#formNoticias h3 {
+    margin-bottom: 10px;
+    font-size: 30px
+}
+
+#formNoticias form input{
+        width: 30%;
+        height: 30px;
+        text-align: center;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+footer{
+    background-color: black;
+    text-align: center;
+    height: 50px;
+}
+
+footer p{
+    color: aliceblue;
+}
+
+.hidden{
+    display: none !important;
+}

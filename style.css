@@ -6,11 +6,11 @@
     padding: 0;
 }
 
-body{
+body {
     font-family: 'Quicksand', sans-serif;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
@@ -19,14 +19,60 @@ a:visited {
     color: black;
 }
 
-#navbar{
+.botones {
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    background-color: #af8b5b;
+    margin: 10px;
+}
+
+.divEmergente {
+    padding: 20px;
+    text-align: center;
+    border-radius: 20px;
+    background-color: blanchedalmond;
+    width: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+}
+
+#añadido {
+    background-color: #51946b;
+    color: rgb(246, 239, 229);
+    transition: all 0.5s ease-out;
+}
+
+#blur {
+    background-color: rgb(255 255 255 / 0.3);
+    backdrop-filter: blur(20px);
+    opacity: 100%;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+}
+
+#navbar {
     width: 100%;
     display: flex;
     justify-content: space-between;
     color: black;
+    position: fixed;
+    background-color: azure;
+    box-shadow: -1px 13px 16px -4px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 13px 16px -4px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 13px 16px -4px rgba(0, 0, 0, 0.75);
+    z-index: 500;
 }
 
-#navbar ul{
+#navbar ul {
     display: flex;
     list-style-type: none;
     font-size: 20px;
@@ -35,11 +81,11 @@ a:visited {
     margin: 10px 40px 10px 10px;
 }
 
-#navbar ul li{
+#navbar ul li {
     margin-left: 30px;
 }
 
-#logo{
+#logo {
     font-family: 'Permanent Marker', cursive;
     font-size: 30px;
     margin-left: 30px;
@@ -47,12 +93,12 @@ a:visited {
     font-size: 50px;
 }
 
-#carritoImg{
+#carritoImg {
     width: 40px;
     height: 40px;
 }
 
-#firstLook{
+#firstLook {
     display: flex;
     background-image: url(./img/fondo1.jpg);
     background-position: center;
@@ -64,78 +110,85 @@ a:visited {
     align-items: center;
 }
 
-#firstLook h1{
+#firstLook h1 {
     font-size: 80px;
     color: aliceblue;
     text-shadow: 2px 2px black;
 }
 
-#conciertos{
+#conciertos {
     margin-top: 50px;
     padding: 30px;
     text-align: center;
 }
 
-#conciertos div{
+#conciertos h2 {
+    font-size: 40px;
+    margin-bottom: 80px;
+}
+
+#conciertos div {
     display: flex;
 }
 
-#listaConciertos{
+#listaConciertos {
     justify-content: space-between;
 }
 
-#listaConciertos div{
+#listaConciertos div {
     border-radius: 20px;
     margin-bottom: 30px;
     display: block;
-    box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
-    -webkit-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
     transition: 0.5s;
 }
 
-#listaConciertos div:hover{
+#listaConciertos div:hover {
     scale: 1.1;
 }
 
-#listaConciertos div img{
+#listaConciertos div img {
     border-radius: 20px;
     width: 400px;
     height: 400px;
 }
 
-#listaConciertos div p{
+#listaConciertos div p {
     font-size: 30px;
     margin: 10px;
 }
 
-#seleccionEntradas{
-    margin: auto;
+#seleccionEntradas {
+    margin: 50px auto;
     display: flex;
     width: 80%;
     border-radius: 20px;
     background-color: antiquewhite;
-    box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
-    -webkit-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
-    -moz-box-shadow: -1px 10px 24px -6px rgba(0,0,0,0.75);
+    box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
     justify-content: center;
     align-items: center;
 }
 
-#seleccionEntradas form{
+#seleccionEntradas form {
     margin: 20px;
 }
 
-#opcionesForm{
+#opcionesForm {
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-#opcionesForm p{
+#opcionesForm p , #artistaElegido{
+    margin-top: 10px;
     font-size: 20px;
 }
-#opcionesForm select{
+
+#opcionesForm select {
     margin: 10px;
     border-radius: 10px;
     width: 60%;
@@ -143,13 +196,7 @@ a:visited {
     text-align: center;
 }
 
-#seleccionEntradas form button{
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 20px;
-}
-
-#formNoticias{
+#formNoticias {
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: center;
@@ -160,23 +207,27 @@ a:visited {
     font-size: 30px
 }
 
-#formNoticias form input{
-        width: 30%;
-        height: 30px;
-        text-align: center;
-        font-family: 'Quicksand', sans-serif;
-    }
+#formNoticias form input {
+    width: 30%;
+    height: 30px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+}
 
-footer{
+footer {
     background-color: black;
     text-align: center;
     height: 50px;
 }
 
-footer p{
+footer p {
     color: aliceblue;
 }
 
-.hidden{
+.hidden {
     display: none !important;
+}
+
+.blur {
+    bleed: 90%;
 }

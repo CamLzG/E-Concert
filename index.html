@@ -14,77 +14,88 @@
         <nav id="navbar">
             <a href="index.html" id="logo">E-Concert</a>
             <ul>
+                <li id="registro">Registro</li>
                 <li>
-                    <a href="">Registro</a> <!-- Al hacer click envia a la section registro -->
-                </li>
-                <li>
-                    <a href="">
-                        <img src="./img/agregar-carrito.png" alt="Carrito" id="carritoImg">
-                    </a>
+                    <img src="./img/agregar-carrito.png" alt="Carrito" id="carritoImg">
                 </li>
             </ul>
         </nav>
     </header>
-    <section id="firstLook">
-        <h1>Bienvenid@ a E-Concert</h1>
-    </section>
-    <!-- Conciertos Disponibles -->
-    <section id="conciertos">
-        <div id="listaConciertos">
-            <a href=""></a>
-            <div>
-                <img src="./img/c1.png" alt="Dua Lipa">
-                <p>Dua Lipa</p>
+    <div id="emergentes">
+        <!-- Carrito oculto -->
+        <section id="carrito">
+            <div id="contenedorCarrito" class="divEmergente hidden">
+                <button class="botones" id="calculoTotal">Calcular total</button>
             </div>
-            </a>
-            <a href=""></a>
-            <div>
-                <img src="./img/c2.png" alt="Bad Bunny">
-                <p>Bad Bunny</p>
+            <div id="totalCarrito" class="hidden">
+                <button class="botones" id="reset">Cerrar</button>
             </div>
-            </a>
-            <a href=""></a>
-            <div>
-                <img src="./img/c3.png" alt="Metallica">
-                <p>Metallica</p>
+            <!-- Carrito cierre -->
+            <div id="registroCompleto" class="divEmergente hidden">
+                <button class="botones" id="resetForm">Gracias</button>
             </div>
-            </a>
-        </div>
-        <div id="seleccionEntradas" class="hidden"> <!-- se mostrara cuando se elija el concierto -->
-            <form action="">
-                <div id="opcionesForm">
-                <p>Seleciona la cantidad de entradas que deseas (Máximo 4 por persona)<br>Recuerda que los menores
-                    deben
-                    ir acompañados de un adulto.</p>
-                <select name="cantidad" id="">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select> <!-- Si elige mas de una pasa a preguntar cantidad de menores -->
-                <p>Seleciona la cantidad de menores</p>
-                <select name="cantidad" id="" class="">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
+            <!-- Msg item añadido -->
+            <div id="añadido" class="divEmergente hidden"></div>
+        </section>     
+    </div>
+    <div id="blur" class="hidden"></div>
+    <div id="contenido">
+        <section id="firstLook">
+            <h1>Bienvenid@ a E-Concert</h1>
+        </section>
+        <!-- Conciertos Disponibles -->
+        <section id="conciertos">
+            <h2>Selecciona el concierto que deseas:</h2>
+            <div id="listaConciertos">
+                <div class="mostrarEntradas" id="duaLipa">
+                    <img src="./img/c1.png" alt="Dua Lipa">
+                    <p>Dua Lipa</p>
+                </div>
+                <div class="mostrarEntradas" id="badBunny">
+                    <img src="./img/c2.png" alt="Bad Bunny">
+                    <p>Bad Bunny</p>
+                </div>
+                <div class="mostrarEntradas" id="metallica">
+                    <img src="./img/c3.png" alt="Metallica">
+                    <p>Metallica</p>
+                </div>
             </div>
-                <button type="submit">Agregar al carrito</button>
+            <div id="seleccionEntradas" class="hidden"> <!-- se mostrara cuando se elija el concierto -->
+                <form action="" id="formularioEntradas">
+                    <div id="opcionesForm">
+                        <div id="artistaElegido"></div>
+                        <p>Seleciona la cantidad de entradas que deseas (Máximo 4 por persona)</p>
+                        <select name="cantidad" id="cantidadEntradas">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select> <!-- Si elige mas de una pasa a preguntar cantidad de menores -->
+                        <p>Seleciona la cantidad de menores:</p>
+                        <p>(Recuerda que los menores deben ir acompañados de un adulto)</p>
+                        <select name="cantidad" id="entradasMenores" class="">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <button class="botones" type="submit">Agregar al carrito</button>
+                </form>
+            </div>
+        </section>
+        <!-- Formulario de contacto -->
+        <section id="formNoticias">
+            <h3>Enterate de los últimos conciertos disponibles</h3>
+            <form action="" id="formRegistro">
+                <div>
+                    <label for="Email"></label>
+                    <input type="email" name="Email" id="Email" placeholder="example@example">
+                </div>
+                <button class="botones" type="submit" id="registro">Registrarse</button>
             </form>
-        </div>
-    </section>
-    <!-- Formulario de contacto -->
-    <section id="formNoticias">
-        <h3>Enterate de los últimos conciertos disponibles</h3>
-        <form action="">
-            <div>
-                <label for="Email"></label>
-                <input type="email" name="Email" id="Email" placeholder="example@example">
-            </div>
-            <button type="submit">Enviar</button>
-        </form>
-    </section>
+        </section>
+    </div>
     <footer>
         <p>Copyright © Todos los derechos reservados</p>
     </footer>

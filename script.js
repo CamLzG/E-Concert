@@ -168,7 +168,7 @@ detalleCarrito.addEventListener("click", (e) => {
         carrito.splice(carrito.findIndex(item => item.Id === e.target.id), 1)
         localStorage.setItem("carrito", JSON.stringify(carrito))
         // Se elimina del DOM el elemento
-        elementosTabla.deleteRow(e.target.parentNode.parentNode)
+        elementosTabla.deleteRow(e.target.parentNode.parentNode.rowIndex-1)
     }
 })
 

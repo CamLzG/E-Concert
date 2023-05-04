@@ -135,6 +135,7 @@ th, td {
 
 #navbar ul li {
     margin-left: 30px;
+    cursor: pointer;
 }
 
 #logo {
@@ -148,6 +149,7 @@ th, td {
 #carritoImg {
     width: 40px;
     height: 40px;
+    cursor: pointer;
 }
 
 #firstLook {

@@ -1,124 +1,224 @@
+// Variables
+
 const cantidadMaxima = 4
 let blurFondo = document.getElementById("blur")
+// Setea el carrito en función del localStorage
+const carritoStorage = JSON.parse(localStorage.getItem("carrito"));
+let carrito = carritoStorage != null ? carritoStorage : [];
+// Setea la información del mail con el localStorage
+const mailStorage = JSON.parse(localStorage.getItem("mailRegistro"));
+let mailRegistro = mailStorage != null ? mailStorage : [];
+let entradas = [];
+let artista;
 
-function Entrada(id, nombre, precio, precioMenores) {
+// Constructor para el carrito
+function ItemCarrito(id, nombre, entradas, menores, total) {
     this.Id = id;
-    this.Nombre = nombre;
-    this.Precio = precio;
-    this.PrecioMenores = precioMenores;
-}
-
-function ItemCarrito(nombre, entradas, menores, total) {
     this.Nombre = nombre;
     this.Entrada = entradas;
     this.Menores = menores;
     this.Total = total;
 }
 
-let entradas = [
-    new Entrada("badBunny", "Bad Bunny", 100, 50),
-    new Entrada("duaLipa", "Dua Lipa", 200, 100),
-    new Entrada("metallica", "Metallica", 200, 100),
-]
+// Evento para mostrar selector de entradas
+let conciertos = document.getElementById("listaConciertos")
 
-let carritoStorage = JSON.parse(localStorage.getItem("carrito"));
-let carrito = carritoStorage != null ? carritoStorage : [];
+conciertos.addEventListener("click", (e) => {
+    // Fuerza que el evento se dispare al tocar el div "mostrarEntradas"
+    if (e.target.className === "mostrarEntradas" ||
+        e.target.parentNode.className === "mostrarEntradas") {
+        let divId = e.target.id ? e.target.id : e.target.parentNode.id
+        artista = entradas.find(entrada => entrada.id === divId)
+        let seleccionEntradas = document.getElementById("seleccionEntradas")
+        let artistaSelecionado = document.getElementById("artistaElegido")
+        artistaSelecionado.innerHTML = `Has seleccionado a ${artista.nombre} :`
+        seleccionEntradas.classList.remove("hidden")
+        // seleccionEntradas.classList.add("show")
+    }
+})
 
+// Crea tarjetas a partir del archivo json
+fetch("artistas.json")
+    .then(datos => datos.json())
+    .then(datos => {
+        datos.forEach(artistas => {
+            // Deconstructuring de artistas
+            const { id, nombre, URLimg } = artistas
+            let contenedorEntradas = document.createElement("div")
+            contenedorEntradas.className = "mostrarEntradas"
+            contenedorEntradas.setAttribute("id", id)
+            contenedorEntradas.innerHTML = `
+        <img src="${URLimg}" alt="${nombre}">
+                    <p>${nombre}</p> `
+            conciertos.appendChild(contenedorEntradas)
+        })
+        entradas = datos;
+    })
+
+// Funcion para calcular el total
 function calcularPrecio(cantidadEntradas, entradasMenores, entrada) {
-    let totalMayores = (cantidadEntradas - entradasMenores) * entrada.Precio
-    let totalMenores = entradasMenores * entrada.PrecioMenores;
+    let totalMayores = (cantidadEntradas - entradasMenores) * entrada.precio
+    let totalMenores = entradasMenores * entrada.precioMenores;
     return totalMayores + totalMenores;
 }
 
-
-let registro = document.getElementById("registro")
+// Scroll a formulario de registro
+const registro = document.getElementById("registro")
 registro.addEventListener("click", () => {
-    let formNoticias = document.getElementById("formNoticias")
+    const formNoticias = document.getElementById("formNoticias")
     formNoticias.scrollIntoView()
 })
 
-let artista;
-
-let seleccionConcierto = document.getElementsByClassName("mostrarEntradas")
-for (let index = 0; index < seleccionConcierto.length; index++) {
-    seleccionConcierto[index].addEventListener("click", () => {
-        artista = entradas.find(entrada => entrada.Id === seleccionConcierto[index].id)
-        let seleccionEntradas = document.getElementById("seleccionEntradas")
-        let artistaSelecionado = document.getElementById("artistaElegido")
-        artistaSelecionado.innerHTML = `Has seleccionado a ${artista.Nombre} :`
-        seleccionEntradas.classList.remove("hidden")
-    })
-}
-
+// Añadir items al carrito
 let formularioEntradas = document.getElementById("formularioEntradas")
+
 formularioEntradas.addEventListener("submit", (e) => {
     e.preventDefault()
-    let entradasTotales = formularioEntradas.cantidadEntradas.value
-    let entradasMenores = formularioEntradas.entradasMenores.value
-    let total = calcularPrecio(entradasTotales, entradasMenores, artista)
-    carrito.push(new ItemCarrito(artista.Nombre, entradasTotales, entradasMenores, total))
-    localStorage.setItem("carrito", JSON.stringify(carrito))
-    formularioEntradas.cantidadEntradas.value = 1
-    formularioEntradas.entradasMenores.value = 0
-    let contendorMsg = document.getElementById("añadido")
-    contendorMsg.innerHTML = `Se ha añadido la/las entrada/s para ${artista.Nombre} al carrito`
-    contendorMsg.classList.toggle("hidden")
-    setTimeout(function () {
-        contendorMsg.classList.toggle("hidden");
-    }, 1000);
+    let entradasTotales = Number(formularioEntradas.cantidadEntradas.value)
+    let entradasMenores = Number(formularioEntradas.entradasMenores.value)
+    let entradasArtista = carrito.find(item => item.Id === artista.id)?.Entrada
+    // Evalua que no se supere la cantidad máxima de entradas
+    if ((entradasArtista !== undefined && entradasTotales + entradasArtista <= cantidadMaxima) ||
+        entradasArtista === undefined) {
+        let total = calcularPrecio(entradasTotales, entradasMenores, artista)
+        if (entradasArtista != undefined) {
+            let index = carrito.findIndex(item => item.Id === artista.id)
+            carrito[index].Entrada += entradasTotales
+            carrito[index].Menores += entradasMenores
+        } else {
+            carrito.push(new ItemCarrito(artista.id, artista.nombre, Number(entradasTotales), entradasMenores, total))
+        }
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+        formularioEntradas.cantidadEntradas.value = 1
+        formularioEntradas.entradasMenores.value = 0
+        Toastify({
+            text: `Se ha añadido la/las entrada/s para ${artista.nombre} al carrito`,
+            duration: 2000,
+            gravity: "bottom",
+            position: "right",
+            offset: {
+                x: 50,
+                y: 50
+            }
+        }).showToast();
+    } else {
+        Toastify({
+            text: `No puedes simular mas de 4 entradas por artista. Confirma tu carrito actual y realiza una nueva simulación de ser necesario.`,
+            duration: 2000,
+            gravity: "bottom",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #522828, #fc2e2e)",
+            },
+            offset: {
+                x: 50,
+                y: 50
+            }
+        }).showToast();
+    }
 })
 
+// Creacion del carrito
 let carrito2 = document.getElementById("carritoImg")
+let detalleCarrito = document.getElementById("detalleCarrito")
+let contenderPadre = document.getElementById("contenedorCarrito")
+let elementosTabla = document.getElementById("elementosTabla")
+let totalCarrito = document.getElementById("totalCarrito")
+
 carrito2.addEventListener("click", () => {
     blurFondo.classList.remove("hidden")
-    let contenedorCarrito = document.getElementById("contenedorCarrito")
-    for (let index = 0; index < carrito.length; index++) {
-        let contenido = document.createElement("p")
-        contenido.innerHTML = `${carrito[index].Nombre} - ${carrito[index].Entrada} Entradas - ${carrito[index].Menores} Menores`
-        contenedorCarrito.prepend(contenido)
+    // Previene que se dupliquen los elementos del carrito al ejecutarse el evento
+    while (elementosTabla.hasChildNodes()) {
+        elementosTabla.removeChild(elementosTabla.firstChild)
     }
-    contenedorCarrito.classList.remove("hidden")
+    for (let index = 0; index < carrito.length; index++) {
+        let fila = elementosTabla.insertRow()
+        let nombreArtista = fila.insertCell(0)
+        let entradasTS = fila.insertCell(1)
+        let menoresT = fila.insertCell(2)
+        let eliminarA = fila.insertCell(3)
+        nombreArtista.innerHTML = `${carrito[index].Nombre}`
+        entradasTS.innerHTML = `${carrito[index].Entrada}`
+        menoresT.innerHTML = `${carrito[index].Menores}`
+        eliminarA.innerHTML = `<i class="fa fa-times" aria-hidden="true" id="${carrito[index].Id}"></i>`
+    }
+    contenderPadre.classList.remove("hidden")
 })
 
-let botonCarrito = document.getElementById("calculoTotal")
-botonCarrito.addEventListener("click", () => {
-    let calcularTotal = carrito.reduce((acc, item) => acc + item.Total, 0)
-    let totalCarrito = document.getElementById("totalCarrito")
-    totalCarrito.classList.remove("hidden")
-    let total = document.createElement("p")
-    total.innerHTML = `El total de tu carrito es ${calcularTotal} pesos uruguayos.`
-    totalCarrito.prepend(total)
-    totalCarrito.className = "divEmergente"
-    let sectionCarrito = document.getElementById("contenedorCarrito")
-    sectionCarrito.classList.add("hidden")
+// Eliminar elemento carrito
+detalleCarrito.addEventListener("click", (e) => {
+    if (e.target.tagName == "I") {
+        // Busca en el array y elimina el elemento a partir de la posición 1
+        carrito.splice(carrito.findIndex(item => item.Id === e.target.id), 1)
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+        // Se elimina del DOM el elemento
+        elementosTabla.deleteRow(e.target.parentNode.parentNode)
+    }
 })
 
-let reset = document.getElementById("reset")
-reset.addEventListener("click", () => {
+// Cerrar carrito
+let cerrarCarrito = document.getElementById("cerrarCarrito")
+cerrarCarrito.addEventListener("click", () => {
     blurFondo.classList.add("hidden")
-    localStorage.clear()
-    carrito = [];
-    let totalCarrito = document.getElementById("totalCarrito")
+    contenderPadre.classList.add("hidden")
+})
+
+let cerrarCarrito2 = document.getElementById("cerrarCarrito2")
+cerrarCarrito2.addEventListener("click", () => {
+    blurFondo.classList.add("hidden")
     totalCarrito.classList.add("hidden")
-    location.reload()
 })
 
+// Calcular total
+let botonCarrito = document.getElementById("calculoTotal")
+let mostrarTotal = document.getElementById("mostrarTotal")
 
-let botonRegistro = document.getElementById("formRegistro")
-botonRegistro.addEventListener("submit", (e) => {
+botonCarrito.addEventListener("click", () => {
+    // Realiza la suma de los totales en el carrito
+    let calcularTotal = carrito.reduce((acc, item) => acc + item.Total, 0)
+    totalCarrito.classList.remove("hidden")
+    mostrarTotal.innerHTML = `El total de tu carrito es ${calcularTotal} pesos uruguayos.`
+    contenderPadre.classList.add("hidden")
+})
+
+// Reseteo de carrito y localStorage
+let formEnviar = document.getElementById("formEnviar")
+
+formEnviar.addEventListener("submit", (e) => {
     e.preventDefault()
-    blurFondo.classList.remove("hidden")
-    let formNoticias = document.getElementById("registroCompleto")
-    formNoticias.classList.remove("hidden")
-    let alerta = document.createElement("p")
-    alerta.innerHTML = `¡Tu registro se completó con exito!`
-    formNoticias.prepend(alerta)
+    let email = formEnviar.Email.value
+    // Se evaluan los requisitos iniciales del formulario
+    if (email != undefined && email != "") {
+        swal("¡Hemos enviado la información a tu mail!", "Gracias por usar nuestros servicios", "success");
+        blurFondo.classList.add("hidden")
+        localStorage.clear()
+        carrito = [];
+        let totalCarrito = document.getElementById("totalCarrito")
+        totalCarrito.classList.add("hidden")
+    } else {
+        swal("Debes ingresar un mail valido para el envío", "Ejemplo: ejemplo@ejemplo", "error");
+    }
 })
 
-let resetForm = document.getElementById("resetForm")
-resetForm.addEventListener("click", () => {
-    blurFondo.classList.add("hidden")
-    location.reload()
-    let formNoticias = document.getElementById("registroCompleto")
-    formNoticias.classList.add("hidden")
+// Formulario de registro
+let formularioRegistro = document.getElementById("formRegistro")
+
+formularioRegistro.addEventListener("submit", (e) => {
+    e.preventDefault()
+    let email = formularioRegistro.Email.value
+    // Se evaluan los requisitos iniciales del formulario
+    if (email != undefined && email != "") {
+        // Se evalua si el mail a registrar ya se encuentra registrado
+        if (mailRegistro.some(mail => mail === email)) {
+            swal("Tu mail ya se encuentra registrado", "", "error");
+        } else {
+            swal("¡Tu mail ha sido registrado con exito!", "", "success");
+            mailRegistro.push(email)
+            localStorage.setItem("mailRegistro", JSON.stringify(mailRegistro))
+            formularioRegistro.Email.value = ""
+        }
+        // De no cumplirse el requisito inicial, se solicita ingresar nuevamente la información
+    } else {
+        swal("Debes ingresar un mail valido para el registro", "Ejemplo: ejemplo@ejemplo", "error");
+    }
 })

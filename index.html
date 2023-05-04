@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tostify -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <title>E-Concert</title>
 </head>
 
 <body>
+    <!-- Navbar -->
     <header>
         <nav id="navbar">
             <a href="index.html" id="logo">E-Concert</a>
@@ -25,18 +31,36 @@
         <!-- Carrito oculto -->
         <section id="carrito">
             <div id="contenedorCarrito" class="divEmergente hidden">
+                <h2>Tus entradas seleccionadas son:</h2>
+                <div id="detalleCarrito">
+                    <table>
+                        <thead>
+                            <th>Artista</th>
+                            <th>Entradas totales</th>
+                            <th>Entradas para menores</th>
+                            <th>Eliminar</th>
+                        </thead>
+                        <tbody id="elementosTabla">
+                        </tbody>
+                    </table>
+                </div>
                 <button class="botones" id="calculoTotal">Calcular total</button>
+                <button class="botones" id="cerrarCarrito">Cerrar</button>
             </div>
-            <div id="totalCarrito" class="hidden">
-                <button class="botones" id="reset">Cerrar</button>
+            <div id="totalCarrito" class="divEmergente hidden">
+                <p id="mostrarTotal"></p>
+                <p class="inicioForm">Ingresa tu correo para enviarte la información:</p>
+                <form action="" id="formEnviar">
+                    <div>
+                        <label for="Email"></label>
+                        <input type="email" name="Email" id="" placeholder="example@example" class="input">
+                    </div>
+                    <button type="submit" class="botones" id="reset">Enviar</button>
+                    <button type="button" class="botones" id="cerrarCarrito2">Cerrar</button>
+                    <p>Si envias la información por mail, el carrito de compras se vaciara.</p>
+                </form>
             </div>
-            <!-- Carrito cierre -->
-            <div id="registroCompleto" class="divEmergente hidden">
-                <button class="botones" id="resetForm">Gracias</button>
-            </div>
-            <!-- Msg item añadido -->
-            <div id="añadido" class="divEmergente hidden"></div>
-        </section>     
+        </section>
     </div>
     <div id="blur" class="hidden"></div>
     <div id="contenido">
@@ -46,21 +70,9 @@
         <!-- Conciertos Disponibles -->
         <section id="conciertos">
             <h2>Selecciona el concierto que deseas:</h2>
-            <div id="listaConciertos">
-                <div class="mostrarEntradas" id="duaLipa">
-                    <img src="./img/c1.png" alt="Dua Lipa">
-                    <p>Dua Lipa</p>
-                </div>
-                <div class="mostrarEntradas" id="badBunny">
-                    <img src="./img/c2.png" alt="Bad Bunny">
-                    <p>Bad Bunny</p>
-                </div>
-                <div class="mostrarEntradas" id="metallica">
-                    <img src="./img/c3.png" alt="Metallica">
-                    <p>Metallica</p>
-                </div>
-            </div>
-            <div id="seleccionEntradas" class="hidden"> <!-- se mostrara cuando se elija el concierto -->
+            <div id="listaConciertos"></div>
+            <!-- Formulario entradas -->
+            <div id="seleccionEntradas" class="hidden">
                 <form action="" id="formularioEntradas">
                     <div id="opcionesForm">
                         <div id="artistaElegido"></div>
@@ -70,7 +82,7 @@
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
-                        </select> <!-- Si elige mas de una pasa a preguntar cantidad de menores -->
+                        </select>
                         <p>Seleciona la cantidad de menores:</p>
                         <p>(Recuerda que los menores deben ir acompañados de un adulto)</p>
                         <select name="cantidad" id="entradasMenores" class="">
@@ -90,7 +102,7 @@
             <form action="" id="formRegistro">
                 <div>
                     <label for="Email"></label>
-                    <input type="email" name="Email" id="Email" placeholder="example@example">
+                    <input type="email" name="Email" id="Email" placeholder="example@example" class="input">
                 </div>
                 <button class="botones" type="submit" id="registro">Registrarse</button>
             </form>
@@ -99,6 +111,11 @@
     <footer>
         <p>Copyright © Todos los derechos reservados</p>
     </footer>
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Tostify -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Js -->
     <script src="script.js"></script>
 </body>
 

@@ -10,6 +10,14 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.blur {
+    bleed: 90%;
+}
+
 a {
     text-decoration: none;
 }
@@ -24,15 +32,15 @@ a:visited {
     border-radius: 20px;
     color: white;
     background-color: #af8b5b;
-    margin: 10px;
+    margin: 30px;
 }
 
 .divEmergente {
-    padding: 20px;
+    padding: 40px 30px 10px 30px;
     text-align: center;
     border-radius: 20px;
     background-color: blanchedalmond;
-    width: auto;
+    width: 600px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -42,6 +50,35 @@ a:visited {
     -webkit-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: -1px 10px 24px -6px rgba(0, 0, 0, 0.75);
     z-index: 1000;
+}
+
+.inicioForm {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#mostrarTotal {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+#detalleCarrito table thead :not(:last-child) {
+    padding-right: 50px;
+}
+
+#elementosTabla tr td i {
+    margin: 10px;
+    color: red;
+    font-size: 25px;
+}
+
+.divEmergente h2 {
+    margin: 20px;
+}
+
+.divEmergente p {
+    font-size: 20px;
+    margin: 10px;
 }
 
 #añadido {
@@ -183,7 +220,8 @@ a:visited {
     flex-direction: column;
 }
 
-#opcionesForm p , #artistaElegido{
+#opcionesForm p,
+#artistaElegido {
     margin-top: 10px;
     font-size: 20px;
 }
@@ -196,8 +234,8 @@ a:visited {
     text-align: center;
 }
 
-#formNoticias {
-    margin-top: 50px;
+#formNoticias,
+#formEnviar {
     margin-bottom: 50px;
     text-align: center;
 }
@@ -207,8 +245,13 @@ a:visited {
     font-size: 30px
 }
 
-#formNoticias form input {
-    width: 30%;
+#formEnviar p {
+    font-size: 15px;
+}
+
+.input {
+    margin-top: 20px;
+    width: 500px;
     height: 30px;
     text-align: center;
     font-family: 'Quicksand', sans-serif;
@@ -222,12 +265,4 @@ footer {
 
 footer p {
     color: aliceblue;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.blur {
-    bleed: 90%;
 }

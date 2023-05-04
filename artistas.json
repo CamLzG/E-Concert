@@ -4,20 +4,23 @@
         "nombre": "Bad Bunny",
         "precio": "1000",
         "precioMenores": "500",
-        "URLimg": "./img/c2.png"
+        "URLimg": "./img/c2.png",
+        "fecha" : "20/07"
     },
     {
         "id": "duaLipa",
         "nombre": "Dua Lipa",
         "precio": "2000",
         "precioMenores": "1000",
-        "URLimg": "./img/c1.png"
+        "URLimg": "./img/c1.png",
+        "fecha" : "30/10"
     },
     {
         "id": "metallica",
         "nombre": "Metallica",
         "precio": "2000",
         "precioMenores": "1000",
-        "URLimg": "./img/c3.png"
+        "URLimg": "./img/c3.png",
+        "fecha" : "12/12"
     }
 ]

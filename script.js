@@ -20,6 +20,24 @@ function ItemCarrito(id, nombre, entradas, menores, total) {
     this.Total = total;
 }
 
+// Crea tarjetas a partir del archivo json
+fetch("artistas.json")
+    .then(datos => datos.json())
+    .then(datos => {
+        datos.forEach(artistas => {
+            // Deconstructuring de artistas
+            const { id, nombre, precio, precioMenores, URLimg, fecha } = artistas
+            let contenedorEntradas = document.createElement("div")
+            contenedorEntradas.className = "mostrarEntradas"
+            contenedorEntradas.setAttribute("id", id)
+            contenedorEntradas.innerHTML = `
+        <img src="${URLimg}" alt="${nombre}">
+                    <p>${nombre} - ${fecha}</p><p>Mayores: $${precio}</p><p>Menores: $${precioMenores}</p> `
+            conciertos.appendChild(contenedorEntradas)
+        })
+        entradas = datos;
+    })
+
 // Evento para mostrar selector de entradas
 let conciertos = document.getElementById("listaConciertos")
 
@@ -37,24 +55,6 @@ conciertos.addEventListener("click", (e) => {
     }
 })
 
-// Crea tarjetas a partir del archivo json
-fetch("artistas.json")
-    .then(datos => datos.json())
-    .then(datos => {
-        datos.forEach(artistas => {
-            // Deconstructuring de artistas
-            const { id, nombre, URLimg } = artistas
-            let contenedorEntradas = document.createElement("div")
-            contenedorEntradas.className = "mostrarEntradas"
-            contenedorEntradas.setAttribute("id", id)
-            contenedorEntradas.innerHTML = `
-        <img src="${URLimg}" alt="${nombre}">
-                    <p>${nombre}</p> `
-            conciertos.appendChild(contenedorEntradas)
-        })
-        entradas = datos;
-    })
-
 // Funcion para calcular el total
 function calcularPrecio(cantidadEntradas, entradasMenores, entrada) {
     let totalMayores = (cantidadEntradas - entradasMenores) * entrada.precio
@@ -68,6 +68,37 @@ registro.addEventListener("click", () => {
     const formNoticias = document.getElementById("formNoticias")
     formNoticias.scrollIntoView()
 })
+
+// Funciones de alerta
+
+function mostrarToast(correcto, texto) {
+    if (correcto === true) {
+        Toastify({
+            text: texto,
+            duration: 2000,
+            gravity: "bottom",
+            position: "right",
+            offset: {
+                x: 50,
+                y: 50
+            }
+        }).showToast();
+    } else {
+        Toastify({
+            text: texto,
+            duration: 2000,
+            gravity: "bottom",
+            position: "right",
+            style: {
+                background: "linear-gradient(to right, #522828, #fc2e2e)",
+            },
+            offset: {
+                x: 50,
+                y: 50
+            }
+        }).showToast();
+    }
+}
 
 // Añadir items al carrito
 let formularioEntradas = document.getElementById("formularioEntradas")
@@ -85,36 +116,21 @@ formularioEntradas.addEventListener("submit", (e) => {
             let index = carrito.findIndex(item => item.Id === artista.id)
             carrito[index].Entrada += entradasTotales
             carrito[index].Menores += entradasMenores
+            mostrarToast(true, `Se ha añadido la/las entrada/s para ${artista.nombre} al carrito`)
         } else {
-            carrito.push(new ItemCarrito(artista.id, artista.nombre, Number(entradasTotales), entradasMenores, total))
+            if (entradasMenores <= (entradasTotales - 1)) {
+                carrito.push(new ItemCarrito(artista.id, artista.nombre, Number(entradasTotales), entradasMenores, total))
+                mostrarToast(true, `Se ha añadido la/las entrada/s para ${artista.nombre} al carrito`)
+            } else {
+                mostrarToast(false, `Los menores deben ir acompañados de un adulto`)
+            }
         }
         localStorage.setItem("carrito", JSON.stringify(carrito))
         formularioEntradas.cantidadEntradas.value = 1
         formularioEntradas.entradasMenores.value = 0
-        Toastify({
-            text: `Se ha añadido la/las entrada/s para ${artista.nombre} al carrito`,
-            duration: 2000,
-            gravity: "bottom",
-            position: "right",
-            offset: {
-                x: 50,
-                y: 50
-            }
-        }).showToast();
+
     } else {
-        Toastify({
-            text: `No puedes simular mas de 4 entradas por artista. Confirma tu carrito actual y realiza una nueva simulación de ser necesario.`,
-            duration: 2000,
-            gravity: "bottom",
-            position: "right",
-            style: {
-                background: "linear-gradient(to right, #522828, #fc2e2e)",
-            },
-            offset: {
-                x: 50,
-                y: 50
-            }
-        }).showToast();
+        mostrarToast(false, `No puedes simular mas de 4 entradas por artista. Confirma tu carrito actual y realiza una nueva simulación de ser necesario.`)
     }
 })
 
